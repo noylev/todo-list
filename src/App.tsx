@@ -13,16 +13,14 @@ import Home from "./components/home/Home";
 function App() {
   return (
     <div className="App">
-      <div className="login-page">
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<LoginPage />}></Route>
-            <Route element={<PrivateRoutes />}>
-              <Route path="/home" element={<Home />}></Route>
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<LoginPage />}></Route>
+          <Route element={<PrivateRoutes />}>
+            <Route path="/home" element={<Home />}></Route>
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
