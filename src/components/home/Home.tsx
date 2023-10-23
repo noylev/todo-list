@@ -1,5 +1,11 @@
 import React from "react";
+import "./Home.css";
+import TodoList from "./todo-list/TodoList";
 
 export default function Home() {
-  return <div className="login-page">this is home page</div>;
+  return (
+    <div className="home-page">
+      <TodoList />
+    </div>
+  );
 }
