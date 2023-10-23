@@ -1,0 +1,7 @@
+.mark-task-done {
+  text-decoration: line-through;
+}
+
+.mark-task-active {
+  text-decoration: none;
+}
