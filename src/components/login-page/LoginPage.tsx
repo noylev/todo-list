@@ -2,12 +2,24 @@ import React, { useState } from "react";
 import "./LoginPage.css";
 import { Button, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
+import { getAuthToken } from "../../api";
 export default function LoginPage() {
+  const { login } = useAuth();
   const navigate = useNavigate();
+  const [userName, setUserName] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  function login(): void {
-    navigate("/home");
+  function attemptToLogin(): void {
+    getAuthToken({ userName, password })
+      .then((authToken) => {
+        login({ userName, authToken });
+        navigate("/home");
+      })
+      .catch((e) => {
+        console.error(e);
+        return;
+      });
   }
 
   return (
@@ -18,6 +30,9 @@ export default function LoginPage() {
           id="standard-required"
           label="User Name"
           variant="standard"
+          onChange={(event) => {
+            setUserName(event.target?.value);
+          }}
         />
       </div>
       <div className="section">
@@ -32,14 +47,14 @@ export default function LoginPage() {
           }}
           onKeyDown={(event) => {
             if (event.key === "Enter") {
-              login();
+              attemptToLogin();
             }
           }}
           variant="standard"
         />
       </div>
       <div className="section">
-        <Button onClick={login} disabled={!password}>
+        <Button onClick={attemptToLogin} disabled={!password}>
           Login
         </Button>
       </div>
