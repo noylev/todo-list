@@ -13,6 +13,7 @@ import Home from "./components/home/Home";
 import { AuthContext } from "./context/AuthContext";
 import { useLocalStorage } from "./hooks/useLocalStorage";
 import { checkIsValidToken } from "./api";
+import { LoadingPage } from "./components/loading-page/LoadingPage";
 function App() {
   const { user, setUser } = useContext(AuthContext);
 
@@ -36,22 +37,20 @@ const PrivateRoutes = () => {
   const { pathname } = useLocation();
   const { getItem } = useLocalStorage();
 
-  const [isValidToken, setIsValidToken] = useState<boolean>(true);
+  const [isValidToken, setIsValidToken] = useState<boolean>();
 
   useEffect(() => {
     // initial mount or route changed, check token
     const authToken: string = getItem("authToken");
-    checkIsValidToken(authToken)
-      .then((isValid) => {
-        setIsValidToken(isValid);
-      })
-      .catch(() => {
-        setIsValidToken(false);
-      });
+    if (authToken) {
+      setIsValidToken(
+        !!checkIsValidToken(authToken).then((isValid) => isValid),
+      );
+    } else setIsValidToken(false);
   }, [pathname]);
 
   if (isValidToken === undefined) {
-    return null;
+    return <LoadingPage />;
   }
 
   return isValidToken ? <Outlet /> : <Navigate to="/" replace />;
