@@ -24,6 +24,11 @@ export default function TaskItem({ task, onChange, onDelete }: TaskItemProps) {
     setIsMarkedDone.set(task.isDone);
   }, [task.value, task.isDone]);
 
+  function stopEditMode() {
+    setIsEditMode.setFalse();
+    onChange({ ...task, value });
+  }
+
   return (
     <ListItem
       key={task.key}
@@ -33,7 +38,7 @@ export default function TaskItem({ task, onChange, onDelete }: TaskItemProps) {
           <Button
             disabled={isMarkedDone}
             onClick={() => {
-              setIsEditMode.setTrue();
+              setIsEditMode.toggle();
             }}
           >
             edit
@@ -58,13 +63,17 @@ export default function TaskItem({ task, onChange, onDelete }: TaskItemProps) {
           setValue(event.target.value);
         }}
         onBlur={() => {
-          setIsEditMode.setFalse();
-          onChange({ ...task, value });
+          stopEditMode();
+        }}
+        onKeyDown={(event) => {
+          if (event.key === "Enter") {
+            stopEditMode();
+          }
         }}
         style={{ width: 400 }}
         InputProps={{
           readOnly: !isEditMode,
-          disableUnderline: true,
+          disableUnderline: !isEditMode,
         }}
       />
     </ListItem>
