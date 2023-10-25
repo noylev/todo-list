@@ -4,7 +4,11 @@ import CircularProgress from "@mui/material/CircularProgress";
 export function LoadingPage() {
   return (
     <div className="loading-page">
-      <CircularProgress className="spinner" color="secondary" />
+      <CircularProgress
+        className="spinner"
+        data-testid="spinner"
+        color="secondary"
+      />
     </div>
   );
 }
