@@ -21,7 +21,8 @@ export default function TaskItem({ task, onChange, onDelete }: TaskItemProps) {
   // This effect is for when value of the task gets changed and component should be re-rendered
   useEffect(() => {
     setValue(task.value);
-  }, [task.value]);
+    setIsMarkedDone.set(task.isDone);
+  }, [task.value, task.isDone]);
 
   return (
     <ListItem
