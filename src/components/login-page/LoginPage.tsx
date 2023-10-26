@@ -10,8 +10,8 @@ export default function LoginPage() {
   const [userName, setUserName] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  function attemptToLogin(): void {
-    getAuthToken({ userName, password })
+  async function attemptToLogin(): Promise<void> {
+    await getAuthToken({ userName, password })
       .then((authToken) => {
         login({ userName, authToken });
         navigate("/home");
