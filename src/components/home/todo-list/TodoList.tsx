@@ -20,19 +20,15 @@ export default function TodoList() {
     setValue("");
   }
   function removeTask(taskToRemove: Task): void {
-    const newList = todoList.filter((task) => task.key !== taskToRemove.key);
-    setTodoList(newList);
+    setTodoList(todoList.filter((task) => task.key !== taskToRemove.key));
   }
 
   function editTask(editedTask: Task): void {
-    const newList = todoList.map((task) => {
-      if (task.key === editedTask.key) {
-        task.value = editedTask.value;
-      }
-      return task;
-    });
+    const updatedTasks = todoList.map((task) =>
+      task.key === editedTask.key ? editedTask : task,
+    );
 
-    setTodoList([...newList]);
+    setTodoList(updatedTasks);
   }
 
   return (

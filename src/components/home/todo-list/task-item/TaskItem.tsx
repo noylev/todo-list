@@ -52,7 +52,10 @@ export default function TaskItem({ task, onChange, onDelete }: TaskItemProps) {
       <Checkbox
         edge="start"
         checked={isMarkedDone}
-        onChange={() => setIsMarkedDone.toggle()}
+        onChange={() => {
+          onChange({ ...task, isDone: !isMarkedDone });
+          setIsMarkedDone.toggle();
+        }}
       />
       <TextField
         value={value}
