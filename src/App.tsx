@@ -39,14 +39,21 @@ const PrivateRoutes = () => {
 
   const [isValidToken, setIsValidToken] = useState<boolean>();
 
+  async function checkToken() {
+    try {
+      const authToken: string = getItem("authToken");
+      if (authToken) {
+        const isValid = await checkIsValidToken(authToken);
+        setIsValidToken(isValid);
+      } else setIsValidToken(false);
+    } catch (error) {
+      setIsValidToken(false);
+    }
+  }
+
   useEffect(() => {
     // initial mount or route changed, check token
-    const authToken: string = getItem("authToken");
-    if (authToken) {
-      setIsValidToken(
-        !!checkIsValidToken(authToken).then((isValid) => isValid),
-      );
-    } else setIsValidToken(false);
+    checkToken();
   }, [pathname]);
 
   if (isValidToken === undefined) {
