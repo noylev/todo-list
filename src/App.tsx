@@ -13,7 +13,7 @@ import Home from "./components/home/Home";
 import { AuthContext } from "./context/AuthContext";
 import { useLocalStorage } from "./hooks/useLocalStorage";
 import { checkIsValidToken } from "./api";
-import { LoadingPage } from "./components/loading-page/LoadingPage";
+import LoadingPage from "./components/loading-page/LoadingPage";
 function App() {
   const { user, setUser } = useContext(AuthContext);
 
