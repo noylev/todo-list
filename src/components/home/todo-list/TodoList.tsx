@@ -45,6 +45,7 @@ export default function TodoList() {
             }
           }}
           onChange={(event) => setValue(event.target?.value)}
+          inputProps={{ "data-testid": "new-task-input" }}
         />
         <Button onClick={addTask} disabled={!value}>
           Add
